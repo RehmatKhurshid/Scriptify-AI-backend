@@ -70,8 +70,8 @@ dotenv.config({ override: true });
 // Initialize the Groq client
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// Default model to use (Llama 3.3 70B is a strong general-purpose choice for JSON generation)
-export const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+// Default model to use (openai/gpt-oss-120b is verified working for JSON draft generation)
+export const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 /**
  * Send a chat-style request to Groq API.
  * 

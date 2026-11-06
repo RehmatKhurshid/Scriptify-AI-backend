@@ -69,9 +69,11 @@ Return ONLY this JSON structure (no other text):
 
     res.status(200).json({ message: "Blog draft generated successfully", draft });
   } catch (error) {
+    console.error("Error in generateBlogDraft:", error.message);
     if (error.message?.includes("Groq")) {
       return res.status(503).json({
         message: "AI service unavailable. Check your Groq API key.",
+        error: error.message,
       });
     }
     next(error);
@@ -129,9 +131,11 @@ Content: ${textToSummarize.substring(0, 3000)}`,
 
     res.status(200).json({ message: "Summary generated successfully", summary });
   } catch (error) {
+    console.error("Error in summarizeBlog:", error.message);
     if (error.message?.includes("Groq")) {
       return res.status(503).json({
         message: "AI service unavailable. Check your Groq API key.",
+        error: error.message,
       });
     }
     next(error);
@@ -212,9 +216,11 @@ Return ONLY this JSON (no other text):
 
     res.status(200).json({ message: "SEO metadata generated successfully", seoData, blog });
   } catch (error) {
+    console.error("Error in generateSEOTags:", error.message);
     if (error.message?.includes("Groq")) {
       return res.status(503).json({
         message: "AI service unavailable. Check your Groq API key.",
+        error: error.message,
       });
     }
     next(error);
@@ -320,9 +326,11 @@ Return ONLY a raw JSON array of exactly 5 strings, with no wrapping object and n
 
     res.status(200).json({ message: "Titles generated", titles });
   } catch (error) {
+    console.error("Error in generateTitles:", error.message);
     if (error.message?.includes("Groq")) {
       return res.status(503).json({
         message: "AI service unavailable. Check your Groq API key.",
+        error: error.message,
       });
     }
     next(error);
@@ -357,9 +365,11 @@ ${content}`,
 
     res.status(200).json({ message: "Content improved successfully", improved });
   } catch (error) {
+    console.error("Error in improveContent:", error.message);
     if (error.message?.includes("Groq")) {
       return res.status(503).json({
         message: "AI service unavailable. Check your Groq API key.",
+        error: error.message,
       });
     }
     next(error);

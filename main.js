@@ -72,9 +72,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(globalRateLimiter);
 
-// ─── Database ────────────────────────────────────────────────────────────────
-connectDB();
-
 // ─── Routes ──────────────────────────────────────────────────────────────────
 app.use("/api/users", userRoutes);
 app.use("/api/blogs", blogRoutes);
@@ -128,7 +125,19 @@ app.use((req, res) => {
 // ─── Global Error Handler ─────────────────────────────────────────────────────
 app.use(errorMiddleware);
 
+// ─── Server Bootstrap & DB Connection ───────────────────────────────────────
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Scriptify AI server running on port ${PORT}`));
+
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => console.log(`🚀 Scriptify AI server running on port ${PORT}`));
+  } catch (error) {
+    console.error("❌ Fatal: Could not connect to database. Server not started.", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
 
 export default app;

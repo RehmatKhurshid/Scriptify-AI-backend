@@ -612,9 +612,11 @@ Return ONLY this JSON (no other text):
       blog,
     });
   } catch (error) {
+    console.error("Error in generateBlogSEO:", error.message);
     if (error.message?.includes("Groq")) {
       return res.status(503).json({
         message: "AI service unavailable. Check your Groq API key.",
+        error: error.message,
       });
     }
     next(error);
